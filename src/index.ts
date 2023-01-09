@@ -6,26 +6,29 @@ import info from './info.json';
 const router = Router();
 
 const balances: { [key: string]: string } = info.balances,
-    endpoint: string = info.endpoint,
+    ethendpoint: string = info.ethendpoint,
+    polygonendpoint : string = info.polyendpoint,
     tokenAddress: string = info.token.address,
     tokenSupply: string = info.token.supply,
     tokenDecimals: number = info.token.decimals;
 
 router.get('/', (async () => {
     const handler = new Handler(
-        endpoint,
+        ethendpoint,
+        polygonendpoint,
         tokenAddress,
         balances,
         tokenSupply,
         tokenDecimals,
     );
 
-    return await handler.handleRequest('circulating');
+    return await handler.handleRequest('total');
 }));
 
 router.get('/circulating', (async () => {
     const handler = new Handler(
-        endpoint,
+        ethendpoint,
+        polygonendpoint,
         tokenAddress,
         balances,
         tokenSupply,
@@ -37,7 +40,8 @@ router.get('/circulating', (async () => {
 
 router.get('/total', (async () => {
     const handler = new Handler(
-        endpoint,
+        ethendpoint,
+        polygonendpoint,
         tokenAddress,
         balances,
         tokenSupply,
